@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¡Despega Hacia Tu Futuro!</title>
+  <style>
+    /* Estilos Generales */
+    body {
+      font-family: 'Montserrat', sans-serif; /* Fuente moderna */
+      background: linear-gradient(135deg, #e6f7ff, #ffffff);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      color: #333; /* Color de texto más oscuro */
+    }
+
+    header {
+      background-color: rgba(255, 255, 255, 0.85); /* Transparencia sutil */
+      padding: 20px;
+      width: 90%;
+      max-width: 800px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra más definida */
+      border-radius: 15px; /* Bordes redondeados */
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      color: #004080;
+      font-size: 2.5em;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra de texto */
+    }
+
+    p {
+      font-size: 1.1em;
+      line-height: 1.6; /* Espaciado entre líneas */
+    }
+
+    /* Contenedor de Nombres */
+    #names-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px auto; /* Centrado automático */
+      width: 90%;
+      max-width: 800px;
+    }
+
+    /* Tarjetas de Nombres */
+    .name-card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin: 10px;
+      width: 180px;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s, box-shadow 0.2s; /* Transición suave */
+      cursor: pointer;
+      text-align: center;
+      font-size: 1em;
+      color: #004080;
+      border: 2px solid #b0c4de; /* Borde sutil */
+    }
+
+    .name-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto; /* Más cerca de la parte superior */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+    }
+
+    #modal-nombre {
+      color: #004080;
+      font-size: 2.2em;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    #modal-imagen {
+      max-width: 100%;
+      max-height: 400px;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      margin-bottom: 20px;
+      object-fit: cover; /* Evita distorsión de la imagen */
+    }
+
+    #modal-mensaje {
+      color: #333;
+      font-size: 1.1em;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* Pie de Página */
+    footer {
+      background-color: #004080;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      width: 100%;
+      margin-top: 30px;
+      border-top: 5px solid #b0c4de; /* Borde superior */
+      font-size: 0.9em;
+    }
+
+    /* Imagen del Encabezado (Asegúrate de que la URL sea CORRECTA) */
+    #header-image {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 12px;
+      margin-top: 20px;
+      object-fit: cover; /* Evita distorsión */
+      height: auto; /* Altura automática para mantener la proporción */
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  </head>
+
+<body>
+  <header>
+    <h1>¡Despega Hacia Tu Futuro!</h1>
+    <p>Mensajes de inspiración para futuros Tripulantes de Cabina y Expertos en Gestión Aeroportuaria.</p>
+    <img id="header-image"
+      src="https://s1.elespanol.com/2020/09/25/omicrono/tecnologia/tecnologia-tecnologia_523458626_160908915_1706x1280.jpg"
+      alt="Cockpit de avión">
+  </header>
+
+  <div id="names-container">
+    </div>
+
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h1 id="modal-nombre"></h1>
+      <img id="modal-imagen" src="" alt="Imagen inspiradora" />
+      <p id="modal-mensaje"></p>
+    </div>
+  </div>
+
+  <footer>
+    © 2024 Sueños en el Aire. Todos los derechos reservados.
+  </footer>
+
+  <script>
+    const compañeros = {
+      "keiferth": {
+        mensaje: "Keiferth, tu pasión por la aviación te llevará a surcar los cielos con éxito. ¡Prepárate para un viaje increíble!",
+        imagen: "https://www.ceupe.do/images/easyblog_articles/502/plane-513641_1920.jpg"
+      },
+      "Sebastián": {
+        mensaje: "Sebastián, tu dedicación y atención al detalle te convertirán en un tripulante de cabina excepcional. ¡El cielo es tuyo!",
+        imagen: "https://www.seguritecnia.es/wp-content/uploads/2020/09/emergencias-de-aviacion-civil.jpg"
+      },
+      "Jhon": {
+        mensaje: "Jhon, tu carisma y habilidades de comunicación te harán brillar en la gestión de aerolíneas. ¡Alcanza tus metas!",
+        imagen: "https://assets.weforum.org/article/image/GqWXpCBXsWUct4s23IBMfbEQ3kLEjKj4biHkI5bR6eg.jpeg"
+      },
+      "Nicolas": {
+        mensaje: "Nicolás, tu capacidad de liderazgo te llevará a dirigir aerolíneas con excelencia. ¡El futuro está en tus manos!",
+        imagen: "https://aerolatinnews.com/wp-content/uploads/2020/03/avion-atardecer-pista.jpg"
+      },
+      "Cristian": {
+        mensaje: "Cristian, tu resiliencia y compromiso te permitirán superar cualquier desafío en la cabina. ¡Vuela alto!",
+        imagen: "https://centralescuelaaeronautica.com/wp-content/uploads/2024/01/como-puedo-ser-tcp.jpg"
+      },
+      "Jafet": {
+        mensaje: "Jafet, tu espíritu aventurero te impulsará a explorar nuevos horizontes en la aviación. ¡El éxito te espera!",
+        imagen: "https://i0.wp.com/www.transponder1200.com/wp-content/uploads/2021/11/LUFTHANSA-AIRBUS-A340-300-D-AIGF.jpg?resize=890%2C448&ssl=1"
+      },
+      "Ingrid": {
+        mensaje: "Ingrid, tu elegancia y profesionalismo te destacarán como tripulante de cabina. ¡Prepárate para brillar!",
+        imagen: "https://cursostcp.es/wp-content/uploads/2017/05/1024px-Fly_Levels_Cabin_Crew_Students1-1024x644.jpg"
+      },
+      "Leidy": {
+        mensaje: "Leidy, tu dedicación a la excelencia te llevará a alcanzar grandes logros en la gestión aeroportuaria. ¡El cielo es el límite!",
+        imagen: "https://actualidadaeroespacial.com/wp-content/uploads/2019/10/Lufthansa-151019.jpg"
+      }
+    };
+
+    const namesContainer = document.getElementById('names-container');
+    const modal = document.getElementById('myModal');
+    const modalNombre = document.getElementById('modal-nombre');
+    const modalImagen = document.getElementById('modal-imagen');
+    const modalMensaje = document.getElementById('modal-mensaje');
+    const closeBtn = document.getElementsByClassName('close')[0];
+
+    for (const nombre in compañeros) {
+      const nameCard = document.createElement('div');
+      nameCard.className = 'name-card';
+      nameCard.textContent = nombre;
+      nameCard.addEventListener('click', () => {
+        modalNombre.textContent = `Mensaje para ${nombre}`;
+        modalImagen.src = compañeros[nombre].imagen;
+        modalMensaje.textContent = compañeros[nombre].mensaje;
+        modal.style.display = 'block';
+      });
+      namesContainer.appendChild(nameCard);
+    }
+
+    // Cerrar el modal
+    closeBtn.onclick = function () {
+      modal.style.display = 'none';
+    };
+
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    };
+  </script>
+</body>
+
+</html>
